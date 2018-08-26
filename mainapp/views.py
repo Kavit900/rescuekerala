@@ -99,8 +99,8 @@ def volunteerdata(request):
 
 class RegisterNGO(CreateView):
     model = NGO
-    fields = ['organisation', 'organisation_type','organisation_address', 'name', 'phone', 'area',
-              'description','website_url','location']
+    fields = ['organisation', 'organisation_type', 'organisation_address', 'district', 'name', 'phone', 'area',
+              'description', 'website_url', 'location']
     success_url = '/reg_success'
 
 
@@ -869,8 +869,13 @@ class RequestUpdateView(CreateView):
         self.object = form.save()
         return HttpResponseRedirect(self.get_success_url())
 
+
 class ReqUpdateSuccess(TemplateView):
     template_name = "mainapp/request_update_success.html"
+
+
+class ReportFindPerson(TemplateView):
+    template_name = "mainapp/missing_and_finding_persons.html"
 
 
 class CollectionCenterFilter(django_filters.FilterSet):
