@@ -2,7 +2,57 @@ from django.test import TestCase
 # Create your tests here.
 from mainapp.models import Request, Volunteer, NGO, Contributor, DistrictManager, DistrictNeed, DistrictCollection, RescueCamp, Person
 
+class RequestTests(TestCase):
+
+	def create_request_object(self):
+		return Request.objects.create(
+			district="pkd",
+			requestee="Kavit",
+			requestee_phone="1234567894",
+			location="Ernakulam",
+			latlng="",
+			latlng_accuracy="",
+			needwater=False,
+			needfood=False,
+			needcloth=False,
+			needmed=False,
+			needtoilet=False,
+			needkit_util=False,
+			needrescue=False)
+
+	def test_request_district_name(self):
+		request = self.create_request_object()
+		expected_district_name = f'{request.district}'
+		self.assertEqual(expected_district_name, "pkd")	
+
+	def test_request_requestee_name(self):
+		request = self.create_request_object()
+		expected_requestee_name = f'{request.requestee}'
+		self.assertEqual(expected_requestee_name, "Kavit")
+
+	def test_request_requestee_phone(self):
+		request = self.create_request_object()
+		expected_requestee_phone = f'{request.requestee_phone}'
+		self.assertEqual(expected_requestee_phone, "1234567894")
+
+	def test_request_location(self):
+		request = self.create_request_object()
+		expected_request_location = f'{request.location}'
+		self.assertEqual(expected_request_location, "Ernakulam")
+
+class Volunteer(TestCase):
+
+	def create_volunteer_object(self):
+		return Volunteer.objects.create(
+			name="Kavit",
+			district="pkd",
+			phone="1234567894",
+			organisation="msc",
+			area="pkd",
+			address="near railway crossing")
+
 class ModelTest(TestCase):
+
 	def test_request_string_representation(self):
 		request = Request(
 			district="pkd",
@@ -12,6 +62,7 @@ class ModelTest(TestCase):
 			latlng= "",
 			latlng_accuracy="")
 		self.assertEqual(str(request), request.get_district_display()+' '+request.location)
+
 	def test_volunteer_string_representation(self):
 		volunteer = Volunteer(
 			name="Kavit",
@@ -21,6 +72,7 @@ class ModelTest(TestCase):
 			area="pkd",
 			address="near railway crossing")
 		self.assertEqual(str(volunteer), volunteer.name)
+		
 	def test_NGO_string_representation(self):
 		ngo = NGO(
 			district="pkd",
